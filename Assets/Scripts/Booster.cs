@@ -2,21 +2,28 @@
 
 public class Booster : MonoBehaviour
 {
-    public GameObject character;
+    public GameObject player;
     public Transform point1;
     public Transform point2;
     public float boostPower;
+    private Rigidbody rb;
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        Vector3 heading = point2.position - point1.position;
-        float distance = heading.magnitude;
-        Vector3 direction = heading / distance;
-        character.GetComponent<Rigidbody>().AddForce(direction * boostPower);
+        rb = player.GetComponent<Rigidbody>();
     }
 
-    public Vector3 GetVertexWorldPosition(Vector3 vertex, Transform owner)
+    void OnTriggerEnter(Collider other)
     {
-        return owner.localToWorldMatrix.MultiplyPoint3x4(vertex);
+        if(other.gameObject == player.GetComponent<CharacterController>().currentShape)
+        {
+            Vector3 heading = point2.position - point1.position;
+            float distance = heading.magnitude;
+            Vector3 direction = heading / distance;
+            if (rb.velocity.magnitude < boostPower)
+            {
+                rb.velocity = direction * boostPower;
+            }
+        }
     }
 }

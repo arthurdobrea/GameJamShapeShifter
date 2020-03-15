@@ -4,15 +4,24 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    private Rigidbody rb;
-    private bool isGrounded = true;
-
+    public GameManager gameManager;
+    public GameObject[] shapes;
+    private int index = 0;
     public float speed;
-    public Transform camTransform;
-    
+    public float rotationSpeed;
+
+    public GameObject currentShape { get; set; }
+    private Rigidbody rb;
+    private bool isGrounded = false;
 
     void Start()
     {
+        foreach (GameObject shape in shapes)
+        {
+            shape.SetActive(false);
+        }
+        currentShape = shapes[index];
+        currentShape.SetActive(true);
         rb = GetComponent<Rigidbody>();
     }
 
@@ -23,7 +32,29 @@ public class CharacterController : MonoBehaviour
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
         if (isGrounded)
         {
+            rb.freezeRotation = false;
             rb.AddForce(movement * speed);
+        } else
+        {
+            rb.freezeRotation = true;
+            rb.freezeRotation = false;
+            transform.Rotate(moveVertical * rotationSpeed, 0.0f, moveHorizontal * rotationSpeed, Space.Self);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyUp("space"))
+        {
+            index++;
+            if (index == shapes.Length)
+            {
+                index = 0;
+            }
+            currentShape.SetActive(false);
+            currentShape = shapes[index];
+            currentShape.SetActive(true);
+            currentShape.transform.eulerAngles = Vector3.zero;
         }
     }
 
@@ -48,6 +79,16 @@ public class CharacterController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Coin"))
+        {
+            gameManager.coinNumber--;
+            Destroy(other.gameObject);
+            Debug.Log(gameManager.coinNumber);
         }
     }
 
