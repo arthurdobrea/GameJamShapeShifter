@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public GameManager gameManager;
     public GameObject[] shapes;
     private int index = 0;
     public float speed;
@@ -86,9 +85,7 @@ public class CharacterController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Coin"))
         {
-            gameManager.coinNumber--;
-            Destroy(other.gameObject);
-            Debug.Log(gameManager.coinNumber);
+            other.gameObject.GetComponent<Coin>().Collect();
         }
     }
 
