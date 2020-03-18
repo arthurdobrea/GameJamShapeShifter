@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public GameManager gameManager;
     public GameObject vfx;
     private bool collected;
     private Vector3 scaleFactor = new Vector3(10, 10, 10);
@@ -25,9 +24,8 @@ public class Coin : MonoBehaviour
     public void Collect()
     {
         collected = true;
-        gameManager.coinNumber--;
-        Debug.Log(gameManager.coinNumber);
         GameObject tempVfx = Instantiate(vfx, transform.position, Quaternion.identity) as GameObject;
+        FindObjectOfType<AudioManager>().Play("CollectCoin");
         Destroy(tempVfx, 1);
         Destroy(gameObject, 0.1f);
     }

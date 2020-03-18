@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public GameObject[] shapes;
+    public List<GameObject> shapes;
     private int index = 0;
     public float speed;
     public float rotationSpeed;
@@ -12,6 +12,8 @@ public class CharacterController : MonoBehaviour
     public GameObject currentShape { get; set; }
     private Rigidbody rb;
     private bool isGrounded = false;
+
+    private int coins = 0;
 
     void Start()
     {
@@ -45,8 +47,9 @@ public class CharacterController : MonoBehaviour
     {
         if (Input.GetKeyUp("space"))
         {
+            FindObjectOfType<AudioManager>().Play("Swap");
             index++;
-            if (index == shapes.Length)
+            if (index >= shapes.Count)
             {
                 index = 0;
             }
@@ -85,7 +88,14 @@ public class CharacterController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Coin"))
         {
+            coins++;
+            Debug.Log(coins);
             other.gameObject.GetComponent<Coin>().Collect();
+        }
+
+        if (other.gameObject.CompareTag("Shape"))
+        {
+            shapes.Add(other.gameObject);
         }
     }
 

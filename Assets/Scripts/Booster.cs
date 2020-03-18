@@ -17,6 +17,7 @@ public class Booster : MonoBehaviour
     {
         if(other.gameObject == player.GetComponent<CharacterController>().currentShape)
         {
+            FindObjectOfType<AudioManager>().Play("Booster");
             Vector3 heading = point2.position - point1.position;
             float distance = heading.magnitude;
             Vector3 direction = heading / distance;
