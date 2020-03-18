@@ -344,7 +344,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.4358714e+32, y: 3.649422e-36, z: 5.992e-42, w: 0}
+  m_BoundingSphereOverride: {x: 0, y: 0.203125, z: 0.0390625, w: -0.04296875}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -784,7 +784,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Theme
     clip: {fileID: 8300000, guid: 2983e27fb3d437049abbebe44482fe16, type: 3}
-    volume: 0.3
+    volume: 0.08
     pitch: 1
     loop: 1
     source: {fileID: 0}
@@ -795,8 +795,20 @@ MonoBehaviour:
     loop: 0
     source: {fileID: 0}
   - name: Booster
-    clip: {fileID: 8300000, guid: d6e05b71efa4b424fb74a7ec337f4f5a, type: 3}
+    clip: {fileID: 8300000, guid: e50db0f1fdfd2ab4ca8a638a4a20b4eb, type: 3}
     volume: 0.3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerMove
+    clip: {fileID: 8300000, guid: 19aa77dc324861045b32d855b06b7dad, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Fall
+    clip: {fileID: 8300000, guid: 8ea960997f9dc004ca740549395a8abf, type: 3}
+    volume: 0.2
     pitch: 1
     loop: 0
     source: {fileID: 0}

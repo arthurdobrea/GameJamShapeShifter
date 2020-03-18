@@ -30,6 +30,17 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void SetVoulume(string name, float volume)
+    {
+        Sound s = Array.Find(sounds, sounds => sounds.name == name);
+        if (s == null)
+        {
+            Debug.LogWarning("Sound: " + s.name + " not found");
+            return;
+        }
+        s.source.volume = volume;
+    }
+
     public void Start()
     {
         Play("Theme");

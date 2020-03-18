@@ -24,6 +24,7 @@ public class CharacterController : MonoBehaviour
         currentShape = shapes[index];
         currentShape.SetActive(true);
         rb = GetComponent<Rigidbody>();
+        FindObjectOfType<AudioManager>().Play("PlayerMove");
     }
 
     void FixedUpdate()
@@ -35,8 +36,10 @@ public class CharacterController : MonoBehaviour
         {
             rb.freezeRotation = false;
             rb.AddForce(movement * speed);
+            FindObjectOfType<AudioManager>().SetVoulume("PlayerMove", Mathf.Clamp(Mathf.Abs(rb.velocity.x + rb.velocity.y + rb.velocity.z)/2, 0f, 1f));
         } else
         {
+            FindObjectOfType<AudioManager>().SetVoulume("PlayerMove", 0);
             rb.freezeRotation = true;
             rb.freezeRotation = false;
             transform.Rotate(moveVertical * rotationSpeed, 0.0f, moveHorizontal * rotationSpeed, Space.Self);
@@ -72,6 +75,7 @@ public class CharacterController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
+            FindObjectOfType<AudioManager>().Play("Fall");
             isGrounded = true;
         }
     }
