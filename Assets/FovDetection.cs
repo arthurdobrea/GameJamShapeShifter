@@ -26,8 +26,7 @@ public class FovDetection : MonoBehaviour
             Gizmos.color = Color.red;
         else
             Gizmos.color = Color.green;
-        Gizmos.DrawRay(transform.position,
-            (ShapeShifterScript.player.transform.position - transform.position).normalized * maxRadius);
+        Gizmos.DrawRay(transform.position, (ShapeShifterScript.player.transform.position - transform.position).normalized * maxRadius);
 
         Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, transform.forward * maxRadius);
