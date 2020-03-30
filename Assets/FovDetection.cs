@@ -22,21 +22,23 @@ public class FovDetection : MonoBehaviour
         Gizmos.DrawRay(transform.position, fovLine1);
         Gizmos.DrawRay(transform.position, fovLine2);
 
-        if (!isInFov) Gizmos.color = Color.red;
-        else Gizmos.color = Color.green;
-        
+        if (!isInFov)
+            Gizmos.color = Color.red;
+        else
+            Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position,
             (ShapeShifterScript.player.transform.position - transform.position).normalized * maxRadius);
 
         Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, transform.forward * maxRadius);
     }
-    
+
     public static bool inFOV(Transform checkingObject, Transform target, float maxAngle, float maxRadius)
     {
-        Collider[] overlaps = new Collider[10];
-
+        Collider[] overlaps = new Collider[40];
         int count = Physics.OverlapSphereNonAlloc(checkingObject.position, maxRadius, overlaps);
+
+        Debug.Log(count);
 
         for (int i = 0; i < count; i++)
         {
@@ -57,9 +59,7 @@ public class FovDetection : MonoBehaviour
                         if (Physics.Raycast(ray, out hit, maxRadius))
                         {
                             if (hit.transform == target)
-                            {
                                 return true;
-                            }
                         }
                     }
                 }
@@ -71,8 +71,6 @@ public class FovDetection : MonoBehaviour
 
     private void Update()
     {
-        isInFov = inFOV(transform, ShapeShifterScript.player.transform, maxAngle, maxAngle);
-        
-        Debug.Log(isInFov);
+        isInFov = inFOV(transform, ShapeShifterScript.player.transform, maxAngle, maxRadius);
     }
 }
