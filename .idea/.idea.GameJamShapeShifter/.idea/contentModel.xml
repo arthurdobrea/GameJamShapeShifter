@@ -60,14 +60,9 @@
         </e>
         <e p="Sanity.cs" t="Include" />
         <e p="Scripts" t="Include">
-          <e p="Booster.cs" t="Include" />
           <e p="CameraControl.cs" t="Include" />
           <e p="CameraFollow.cs" t="Include" />
           <e p="CharacterController.cs" t="Include" />
-          <e p="Door.cs" t="Include" />
-          <e p="HoveringObjects.cs" t="Include" />
-          <e p="ShapeShift.cs" t="Include" />
-          <e p="SimpleMoving.cs" t="Include" />
         </e>
         <e p="ShapeShifterScript.cs" t="Include" />
       </e>

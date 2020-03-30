@@ -37,8 +37,6 @@ public class FovDetection : MonoBehaviour
         Collider[] overlaps = new Collider[40];
         int count = Physics.OverlapSphereNonAlloc(checkingObject.position, maxRadius, overlaps);
 
-        Debug.Log(count);
-
         for (int i = 0; i < count; i++)
         {
             if (overlaps[i] != null)
