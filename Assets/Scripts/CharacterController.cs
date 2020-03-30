@@ -4,26 +4,39 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+    public float speed;
+
     private Rigidbody rb;
     private bool isGrounded = true;
-
-    public float speed;
-    public Transform camTransform;
-    
+    public static bool isMoving;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = ShapeShifterScript.player.GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
+        if (ShapeShifterScript.isNewPlayerSwitched)
+        {
+            ShapeShifterScript.isNewPlayerSwitched = false;
+            rb = ShapeShifterScript.player.GetComponent<Rigidbody>();
+        }
+
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        if (isGrounded)
+        if (Input.anyKey)
         {
-            rb.AddForce(movement * speed);
+            isMoving = true;
+            if (isGrounded)
+            {
+                rb.AddForce(movement * speed);
+            }
+        }
+        else
+        {
+            isMoving = false;
         }
     }
 
@@ -50,5 +63,4 @@ public class CharacterController : MonoBehaviour
             isGrounded = false;
         }
     }
-
 }

@@ -30,9 +30,8 @@
             </e>
           </e>
         </e>
-        <e p="CameraControl.cs" t="Include" />
-        <e p="Door.cs" t="Include" />
-        <e p="HoveringObjects.cs" t="Include" />
+        <e p="FovDetection.cs" t="Include" />
+        <e p="HumanWalkScript.cs" t="Include" />
         <e p="LowPolyOfficeProps_LITE" t="Include">
           <e p="About.txt" t="Include" />
         </e>
@@ -41,15 +40,40 @@
             <e p="readME keys.txt" t="Include" />
           </e>
         </e>
+        <e p="NavMeshComponents" t="Include">
+          <e p="Editor" t="Include">
+            <e p="NavMeshAssetManager.cs" t="Include" />
+            <e p="NavMeshComponentsEditor.asmdef" t="Include" />
+            <e p="NavMeshComponentsGUIUtility.cs" t="Include" />
+            <e p="NavMeshLinkEditor.cs" t="Include" />
+            <e p="NavMeshModifierEditor.cs" t="Include" />
+            <e p="NavMeshModifierVolumeEditor.cs" t="Include" />
+            <e p="NavMeshSurfaceEditor.cs" t="Include" />
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="NavMeshComponents.asmdef" t="Include" />
+            <e p="NavMeshLink.cs" t="Include" />
+            <e p="NavMeshModifier.cs" t="Include" />
+            <e p="NavMeshModifierVolume.cs" t="Include" />
+            <e p="NavMeshSurface.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Sanity.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="Booster.cs" t="Include" />
+          <e p="CameraControl.cs" t="Include" />
           <e p="CameraFollow.cs" t="Include" />
           <e p="CharacterController.cs" t="Include" />
+          <e p="Door.cs" t="Include" />
+          <e p="HoveringObjects.cs" t="Include" />
           <e p="ShapeShift.cs" t="Include" />
+          <e p="SimpleMoving.cs" t="Include" />
         </e>
-        <e p="SimpleMoving.cs" t="Include" />
+        <e p="ShapeShifterScript.cs" t="Include" />
       </e>
       <e p="GameJamShapeShifter.sln" t="IncludeFlat" />
+      <e p="NavMeshComponents.csproj" t="IncludeRecursive" />
+      <e p="NavMeshComponentsEditor.csproj" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />
