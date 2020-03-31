@@ -31,6 +31,7 @@
           </e>
         </e>
         <e p="FovDetection.cs" t="Include" />
+        <e p="GrabAndPlacePlayer.cs" t="Include" />
         <e p="HumanWalkScript.cs" t="Include" />
         <e p="LowPolyOfficeProps_LITE" t="Include">
           <e p="About.txt" t="Include" />
