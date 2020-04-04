@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -8,56 +6,72 @@ using Random = UnityEngine.Random;
 public class HumanWalkScript : MonoBehaviour
 {
     public GameObject[] pointOfInterest;
-    public GameObject placeWhereItPutsPlayer;
+    public GameObject placeWhereToPutPlayer;
+    public GameObject placeWhereAiPutsPlayer;
+    public GameObject placeWhereItHolds;
     public NavMeshAgent agent;
     public GameObject currentLocationToMove;
 
-    private void Start()
+    private State state;
+    
+    private enum State
     {
-        findNewPlaceToGo();
-        moveToPlace();
+        SCOUT,MOVING_TO_PLAYER,GRAB_PLAYER,PUT_PLAYER
     }
 
-    void FixedUpdate()
+    private void Start()
+    { 
+        currentLocationToMove = pointOfInterest[0];
+        state = State.SCOUT;
+    }
+
+    private void Update()
     {
-        if (FovDetection.inFOV(transform, ShapeShifterScript.player.transform, 75, 3) && GrabAndPlacePlayer.canGrab == false
-                                                                                      && (CharacterController.isMoving || ShapeShifterScript.player.transform.position.y > -0.4 ))
+        switch (state)
         {
-            Debug.Log("Moving to Player");
-            
-            moveToPlayer();
-
-            if (Vector3.Distance(transform.position, ShapeShifterScript.player.transform.position) < 1)
+            case State.SCOUT:
             {
-                Debug.Log("Goint to grab Player");
+                if (inFOV())
+                {
+                    state = State.MOVING_TO_PLAYER;
+                }
+                else
+                {
+                    findNewPlaceToGo();
+                    moveToPlace();
+                }
+                break;
+            }
+            case State.MOVING_TO_PLAYER:
+            {
+                if (Vector3.Distance(transform.position, ShapeShifterScript.player.transform.position) < 1)
+                {
+                    state = State.GRAB_PLAYER;
+                    ShapeShifterScript.isGrabbed = true;
+                }
+                else
+                {
+                    moveToPlayer();
+                }
+                break;
+            }
+            case State.GRAB_PLAYER:
+            {
+                movePlayerToTable();
                 
-                GrabAndPlacePlayer.canGrab = true;
-            }
-        }
-        else if (GrabAndPlacePlayer.canGrab)
-        {
-            Debug.Log("Going to place player on table");
-            
-            movePlayerToTable();
+                ShapeShifterScript.player.GetComponent<Rigidbody>().useGravity = false;
 
-            if (Vector3.Distance(transform.position, placeWhereItPutsPlayer.transform.position) < 1)
-            {
-                GrabAndPlacePlayer.canGrab = false;
-                GrabAndPlacePlayer.canPut = true;
+                if (Vector3.Distance(transform.position, placeWhereAiPutsPlayer.transform.position) < 1)
+                {
+                    ShapeShifterScript.player.transform.position = placeWhereToPutPlayer.transform.position;
+                    ShapeShifterScript.isGrabbed = false;
+                    state = State.SCOUT;
+
+                    ShapeShifterScript.player.GetComponent<Rigidbody>().useGravity = true;
+                }
+                
+                break;
             }
-        }
-        else
-        {
-            Debug.Log("GoingToNewPlace");
-            
-            moveToPlace();
-        }
-        if (Vector3.Distance(transform.position, currentLocationToMove.transform.position) <= 1 && GrabAndPlacePlayer.canGrab == false)
-        {
-            Debug.Log("Finding New PLace To Go");
-            
-            findNewPlaceToGo();
-            moveToPlace();
         }
     }
 
@@ -73,12 +87,21 @@ public class HumanWalkScript : MonoBehaviour
 
     private void findNewPlaceToGo()
     {
-        int range = Random.Range(1, 5);
-        currentLocationToMove = pointOfInterest[range];
+        if (Vector3.Distance(transform.position, currentLocationToMove.transform.position) <= 1)
+        {
+            int range = Random.Range(1, 5);
+            currentLocationToMove = pointOfInterest[range];
+        }
     }
 
     private void movePlayerToTable()
     {
-        agent.SetDestination(placeWhereItPutsPlayer.transform.position);
+        ShapeShifterScript.player.transform.position = placeWhereItHolds.transform.position;
+        agent.SetDestination(placeWhereAiPutsPlayer.transform.position);
+    }
+
+    private bool inFOV()
+    {
+        return FovDetection.inFOV(transform, ShapeShifterScript.player.transform, 75, 3);
     }
 }

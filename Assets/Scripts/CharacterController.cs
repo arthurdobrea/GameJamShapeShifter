@@ -28,9 +28,9 @@ public class CharacterController : MonoBehaviour
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
         if (Input.anyKey)
         {
-            isMoving = true;
             if (isGrounded)
             {
+                isMoving = true;
                 rb.AddForce(movement * speed);
             }
         }

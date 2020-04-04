@@ -6,10 +6,11 @@ public class ShapeShifterScript : MonoBehaviour
 {
     public Camera camera;
     public GameObject firstPlayer;
-
     public static GameObject player;
 
     public static bool isNewPlayerSwitched = false;
+
+    public static bool isGrabbed = false;
     
     // Start is called before the first frame update
     void Start()
